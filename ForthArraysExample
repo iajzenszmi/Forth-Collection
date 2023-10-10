@@ -1,0 +1,22 @@
+ian@ian-HP-Convertible-x360-11-ab1XX:~$ cat array.forth
+: array  create  dup ,  dup cells here swap 0 fill  cells allot ;
+: [size] @ ;
+: [cell] 1+ cells  + ;               \ hide offset=0 to index [0..n-1]
+
+10 array MyArray  
+
+30 MyArray 7 [cell] ! 
+MyArray 7 [cell] @ .                 \ 30
+
+: 5fillMyArray  5  0 do  I  MyArray I [cell]  !  loop ;
+: .MyArray      MyArray [size]  0 do  MyArray I [cell]  @ .  loop ;
+
+.MyArray                             \ 0 0 0 0 0 0 30 0 0 0 
+5fillMyArray 
+.MyArray                             \ 1 2 3 4 5 0 30 0 0 0
+ian@ian-HP-Convertible-x360-11-ab1XX:~$ gforth array.forth
+30 0 0 0 0 0 0 0 30 0 0 0 1 2 3 4 0 0 30 0 0 Gforth 0.7.3, Copyright (C) 1995-2008 Free Software Foundation, Inc.
+Gforth comes with ABSOLUTELY NO WARRANTY; for details type `license'
+Type `bye' to exit
+bye 
+ian@ian-HP-Convertible-x360-11-ab1XX:~
